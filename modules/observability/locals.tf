@@ -19,36 +19,36 @@ locals {
   )
 
   # ----------------------------------------------------------------
-# OBSERVABILITY — Conditional WAF Dashboard Widget (CloudFront)
-# ----------------------------------------------------------------
+  # OBSERVABILITY — Conditional WAF Dashboard Widget (CloudFront)
+  # ----------------------------------------------------------------
 
-waf_widget = var.rds_app_waf_name != null ? [
-  {
-    type   = "metric"
-    x      = 0
-    y      = 12
-    width  = 24
-    height = 6
+  waf_widget = var.rds_app_waf_name != null ? [
+    {
+      type   = "metric"
+      x      = 0
+      y      = 12
+      width  = 24
+      height = 6
 
-    properties = {
-      title = "CloudFront WAF Blocked Requests"
+      properties = {
+        title = "CloudFront WAF Blocked Requests"
 
-      metrics = [
-        [
-          "AWS/WAFV2",
-          "BlockedRequests",
-          "WebACL", var.rds_app_waf_name,
-          "Region", "Global",
-          "Rule", "ALL"
+        metrics = [
+          [
+            "AWS/WAFV2",
+            "BlockedRequests",
+            "WebACL", var.rds_app_waf_name,
+            "Region", "Global",
+            "Rule", "ALL"
+          ]
         ]
-      ]
 
-      region = "us-east-1"
-      period = 300
-      view   = "timeSeries"
+        region = "us-east-1"
+        period = 300
+        view   = "timeSeries"
+      }
     }
-  }
-] : []
+  ] : []
 
   # Ternary operator syntax:
   # condition ? value_if_true : value_if_false
